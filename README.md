@@ -11,10 +11,15 @@ https://developer.x.com/
 
 https://developers.google.com/sheets/api/quickstart/go
 
-
+Instalar dependencias
 
 ```bash
 pip install -r requirements.txt
+```
+Lanzar script
+```bash
+python main.py
+
 ```
 --- 
 # git

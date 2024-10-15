@@ -68,6 +68,33 @@ if empty_posted_records:
             # Para los tweets en el hilo: solo incluir la columna 'Story'
             text = str(tweet['Text'])
         
+
+
+        #AQUÍ EMPIEZA MI PRUEBA POR ANALIZAR
+    # Verificar si el tweet excede el límite de 280 caracteres
+        if len(text) > 280:
+            # Si el tweet es demasiado largo, actualizar el registro en la hoja
+            worksheet.update_cell(index + 2, 6, "too large")  # Columna "Posted"
+            
+            # Marcar todos los tweets del hilo como "No" para pasar al siguiente ID
+            for hilo_tweet in tweets_to_post:
+                hilo_index = records.index(hilo_tweet)
+                worksheet.update_cell(hilo_index + 2, 5, "No")  # Columna "Posted"
+            
+            # Filtrar los registros que no tengan "No" en "Posted" y actualizar el array tweets_to_post
+            tweets_to_post = [record for record in tweets_to_post if record['Posted'] != "No"]
+            
+            # Saltar al siguiente ID sin postear el hilo
+            first_unposted_id = empty_posted_records[0]['ID']
+            
+            # Filtrar los registros que pertenecen a ese ID y ordenar por Sequence
+            tweets_to_post = sorted([record for record in records if record['ID'] == first_unposted_id], key=lambda x: x['Sequence'])
+            
+            break
+#AQUÍ TERMINA MI PRUEBA POR ANALIZAR
+
+
+
         # Publicar el tweet
         if first_tweet_id is None:
             # Si es el primer tweet, no enlazar a nada
