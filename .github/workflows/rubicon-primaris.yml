@@ -2,6 +2,7 @@ name: rubicon-primaris
 
 on:
   schedule:
+    - cron: "0 9 * * *"
     - cron: "0 19 * * *"
   workflow_dispatch:
 
